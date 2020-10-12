@@ -1,0 +1,33 @@
+{
+  "name": "docusaurus-code-references",
+  "version": "0.0.0",
+  "description": "A Docusaurus v2 plugin that supports referencing code examples from public GitHub repositories.",
+  "main": "build/index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "run-s test:*",
+    "watch": "tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saucelabs/docusaurus-code-references.git"
+  },
+  "keywords": [
+    "docusarus"
+  ],
+  "author": "Christian Bromann <christian@saucelabs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/saucelabs/docusaurus-code-references/issues"
+  },
+  "homepage": "https://github.com/saucelabs/docusaurus-code-references#readme",
+  "devDependencies": {
+    "@docusaurus/types": "^2.0.0-alpha.37",
+    "typescript": "^4.0.3"
+  },
+  "dependencies": {
+    "webpack": "^5.0.0"
+  }
+}
