@@ -1,6 +1,6 @@
-# Contributing to docusaurus-theme-github-codeblock
+# Contributing to `docusaurus-theme-github-codeblock`
 
-**Thank you for your interest in docusaurus-theme-github-codeblock. Your contributions are highly welcome.**
+**Thank you for your interest in `docusaurus-theme-github-codeblock`. Your contributions are highly welcome.**
 
 There are multiple ways of getting involved:
 

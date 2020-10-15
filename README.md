@@ -15,6 +15,16 @@ npm install @saucelabs/theme-github-codeblock
 
 ## Usage
 
+Add the theme plugin to your list of themes in the `docusaurus.config.js`:
+
+```js
+    // ...
+    themes: [
+        '@saucelabs/theme-github-codeblock'
+    ],
+    // ...
+```
+
 In order to reference GitHub snippets in your markdown, create code blocks with a `reference` attached to the language meta string and put the link to your GitHub reference in the code block, e.g.:
 
     ```js reference
