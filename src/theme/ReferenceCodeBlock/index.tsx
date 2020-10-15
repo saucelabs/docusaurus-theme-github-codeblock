@@ -43,8 +43,21 @@ async function fetchCode ({ url, fromLine, toLine }: GitHubReference, fetchResul
         return fetchResultStateDispatcher({ type: 'error', value: error })
     }
 
-    const body = (await res.text()).split('\n').slice(fromLine, (toLine || fromLine) + 1).join('\n')
-    return fetchResultStateDispatcher({ type: 'loaded', value: body })
+    const body = (await res.text()).split('\n').slice(fromLine, (toLine || fromLine) + 1)
+    const preceedingSpace = body.reduce((prev: number, line: string) => {
+        const spaces = line.match(/^\s+/)
+
+        if (spaces) {
+            return Math.min(prev, spaces[0].length)
+        }
+
+        return 0
+    }, Infinity)
+
+    return fetchResultStateDispatcher({
+        type: 'loaded',
+        value: body.map((line) => line.slice(preceedingSpace)).join('\n')
+    })
 }
 
 function ReferenceCode(props: ReferenceCodeBlockProps) {
