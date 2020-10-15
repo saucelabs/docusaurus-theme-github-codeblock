@@ -24,10 +24,17 @@
   },
   "homepage": "https://github.com/saucelabs/docusaurus-code-references#readme",
   "devDependencies": {
-    "@docusaurus/types": "^2.0.0-alpha.37",
+    "@docusaurus/module-type-aliases": "^2.0.0-alpha.65",
+    "@docusaurus/plugin-content-blog": "^2.0.0-alpha.65",
+    "@docusaurus/plugin-content-docs": "^2.0.0-alpha.65",
+    "@docusaurus/plugin-content-pages": "^2.0.0-alpha.65",
+    "@docusaurus/theme-classic": "^2.0.0-alpha.65",
+    "@docusaurus/types": "^2.0.0-alpha.65",
+    "@types/react": "^16.9.52",
+    "@types/recursive-readdir": "^2.2.0",
     "typescript": "^4.0.3"
   },
   "dependencies": {
-    "webpack": "^5.0.0"
+    "react": "^16.14.0"
   }
 }

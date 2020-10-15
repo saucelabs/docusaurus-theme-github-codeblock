@@ -1,27 +1,16 @@
-import { LoadContext } from "@docusaurus/types";
-import { Configuration } from "webpack";
+/**
+ * Copyright (c) Sauce Labs, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
-const DEFAULT_OPTIONS: Record<string, any> = {
-};
+import path from 'path'
 
-module.exports = function (
-  context: LoadContext,
-  opts: Record<string, any>
-) {
-  const options: Record<string, any> = { ...DEFAULT_OPTIONS, ...opts };
+export default () => ({
+    name: 'docusaurus-theme-github-codeblock',
 
-  return {
-    name: "docusaurus-code-references",
-    configureWebpack(config: Configuration, isServer: boolean) {
-      return {
-        plugins: [],
-        module: {
-          rules: [],
-        },
-      };
-    },
-    contentLoaded () {
-        console.log(context, opts)
+    getThemePath() {
+        return path.resolve(__dirname, './theme')
     }
-  };
-};
+})
