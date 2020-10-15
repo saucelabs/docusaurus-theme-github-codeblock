@@ -2,3 +2,5 @@ example
 node_modules
 src
 tsconfig.json
+.github
+*.tgz
