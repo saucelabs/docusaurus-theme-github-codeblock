@@ -1,5 +1,5 @@
-import React, { useReducer } from 'react';
-import CodeBlock from '@theme/CodeBlock';
+import React, { useReducer } from 'react'
+import CodeBlock from '@theme-init/CodeBlock'
 
 import type { ReferenceCodeBlockProps, GitHubReference, DispatchMessage } from '../types'
 
@@ -47,7 +47,7 @@ async function fetchCode ({ url, fromLine, toLine }: GitHubReference, fetchResul
     return fetchResultStateDispatcher({ type: 'loaded', value: body })
 }
 
-function ReferenceCode({reference, ...props}: ReferenceCodeBlockProps) {
+function ReferenceCode(props: ReferenceCodeBlockProps) {
     const [fetchResultState, fetchResultStateDispatcher] = useReducer(
         (prevState: any, { type, value }: DispatchMessage) => {
             switch (type) {
@@ -68,15 +68,21 @@ function ReferenceCode({reference, ...props}: ReferenceCodeBlockProps) {
             }
         },
         initialFetchResultState,
-    );
+    )
 
-    const codeSnippetDetails = parseReference(reference)
+    console.log(props.children);
+
+    const codeSnippetDetails = parseReference(props.children)
     fetchCode(codeSnippetDetails, fetchResultStateDispatcher)
-    props.metastring += ` title="${codeSnippetDetails.title}"`
+    const customProps = {
+        ...props,
+        metastring: ` title="${codeSnippetDetails.title}"`,
+        children: initialFetchResultState.code
+    }
 
     return (
         <div>
-            <CodeBlock {...props}>{fetchResultState.code}</CodeBlock>
+            <CodeBlock {...customProps}>{fetchResultState.code}</CodeBlock>
         </div>
     );
 }

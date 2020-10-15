@@ -1,4 +1,4 @@
-import type { Props } from '@theme/CodeBlock'
+import type { Props } from '@theme-init/CodeBlock'
 
 export interface GitHubReference {
     url: string

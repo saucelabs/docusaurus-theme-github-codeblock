@@ -7,11 +7,11 @@
 
 import React from 'react'
 import ReferenceCodeBlock from '../ReferenceCodeBlock'
-import CodeBlock from '@theme/CodeBlock'
+import CodeBlock from '@theme-init/CodeBlock'
 
 import type { ReferenceCodeBlockProps } from '../types'
 
-const withLiveEditor = (Component: typeof CodeBlock) => {
+const componentWrapper = (Component: typeof CodeBlock) => {
   const WrappedComponent = (props: ReferenceCodeBlockProps) => {
     if (props.reference) {
       return (
@@ -19,10 +19,10 @@ const withLiveEditor = (Component: typeof CodeBlock) => {
       );
     }
 
-    return <Component {...props} />;
+    return <CodeBlock {...props} />
   };
 
   return WrappedComponent;
 };
 
-export default withLiveEditor(CodeBlock);
+module.exports = componentWrapper(CodeBlock)

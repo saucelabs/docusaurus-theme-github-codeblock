@@ -5,6 +5,12 @@ sidebar_label: Style Guide
 slug: /
 ---
 
+This theme provides the following:
+
+```js reference
+https://github.com/saucelabs/performance-js-examples/blob/master/WebDriver.io/tests/jankiness.js#L47-L51
+```
+
 You can write content using [GitHub-flavored Markdown syntax](https://github.github.com/gfm/).
 
 ## Markdown Syntax
@@ -115,9 +121,6 @@ But let's throw in a <b>tag</b>.
 function highlightMe() {
   console.log('This line can be highlighted!');
 }
-```
-
-```js ref="https://github.com/saucelabs/performance-js-examples/blob/master/WebDriver.io/tests/jankiness.js#L47-L51"
 ```
 
 ---
