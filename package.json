@@ -1,5 +1,5 @@
 {
-  "name": "docusaurus-code-references",
+  "name": "@saucelabs/theme-github-codeblock",
   "version": "0.0.0",
   "description": "A Docusaurus v2 plugin that supports referencing code examples from public GitHub repositories.",
   "main": "build/index.js",
@@ -7,7 +7,9 @@
     "example": "example"
   },
   "scripts": {
-    "test": "run-s test:*",
+    "build": "tsc",
+    "release": "release-it --github.release --ci --npm.skipChecks --no-git.requireCleanWorkingDir",
+    "test": "echo \"no unit tests yet\"",
     "watch": "tsc --watch"
   },
   "repository": {
@@ -27,6 +29,7 @@
     "@types/node": "^14.11.8",
     "@types/react": "^16.9.52",
     "@types/recursive-readdir": "^2.2.0",
+    "release-it": "^14.1.0",
     "typescript": "^4.0.3"
   },
   "dependencies": {}

@@ -8,7 +8,7 @@ slug: /
 This theme provides the following:
 
 ```js reference
-https://github.com/saucelabs/performance-js-examples/blob/master/WebDriver.io/tests/jankiness.js#L47-L51
+https://github.com/saucelabs/docusaurus-theme-github-codeblock/blob/main/src/theme/ReferenceCodeBlock/index.tsx#L105-L108
 ```
 
 You can write content using [GitHub-flavored Markdown syntax](https://github.github.com/gfm/).
