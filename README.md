@@ -1,4 +1,4 @@
-Docusaurus Theme GitHub Codeblock
+Docusaurus Theme GitHub Codeblock ![Test Changes](https://github.com/saucelabs/docusaurus-theme-github-codeblock/workflows/Test%20Changes/badge.svg?branch=main)
 =================================
 
 A Docusaurus v2 plugin that supports referencing code examples from public GitHub repositories.
