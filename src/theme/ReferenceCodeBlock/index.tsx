@@ -9,6 +9,11 @@ const initialFetchResultState = {
     loading: null,
 }
 
+const noteStyle: React.CSSProperties = {
+    textAlign: 'right',
+    fontSize: '.8em'
+}
+
 /**
  * parses GitHub reference
  * @param {string} ref url to github file
@@ -18,7 +23,7 @@ function parseReference (ref: string): GitHubReference {
     const [url, loc] = fullUrl.split('#')
     const [org, repo, blob, branch, ...pathSeg] = new URL(url).pathname.split('/').slice(1)
     const [fromLine, toLine] = loc
-        ? loc.split('-').map((lineNr) => parseInt(lineNr.slice(1), 10))
+        ? loc.split('-').map((lineNr) => parseInt(lineNr.slice(1), 10) - 1)
         : [0, Infinity]
 
     return {
@@ -45,8 +50,11 @@ async function fetchCode ({ url, fromLine, toLine }: GitHubReference, fetchResul
 
     const body = (await res.text()).split('\n').slice(fromLine, (toLine || fromLine) + 1)
     const preceedingSpace = body.reduce((prev: number, line: string) => {
-        const spaces = line.match(/^\s+/)
+        if (line.length === 0) {
+            return prev
+        }
 
+        const spaces = line.match(/^\s+/)
         if (spaces) {
             return Math.min(prev, spaces[0].length)
         }
@@ -96,6 +104,7 @@ function ReferenceCode(props: ReferenceCodeBlockProps) {
     return (
         <div>
             <CodeBlock {...customProps}>{fetchResultState.code}</CodeBlock>
+            <div style={noteStyle}>See full example on <a href={props.children} target="_blank">GitHub</a></div>
         </div>
     );
 }
