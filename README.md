@@ -33,7 +33,7 @@ In order to reference GitHub snippets in your markdown, create code blocks with 
 
 The plugin will download the code and display the desired lines:
 
-![Plugin Example](./.github/assets/example.png 'Plugin Example')
+![Plugin Example](https://github.com/saucelabs/docusaurus-theme-github-codeblock/raw/main/.github/assets/example.png 'Plugin Example')
 
 ---
 
