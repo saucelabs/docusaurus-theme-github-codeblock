@@ -19,7 +19,7 @@ const noteStyle: React.CSSProperties = {
  * parses GitHub reference
  * @param {string} ref url to github file
  */
-function parseReference (ref: string): GitHubReference {
+export function parseReference (ref: string): GitHubReference {
     const fullUrl = ref.slice(ref.indexOf('https'), -1)
     const [url, loc] = fullUrl.split('#')
     const [org, repo, blob, branch, ...pathSeg] = new URL(url).pathname.split('/').slice(1)
@@ -91,8 +91,6 @@ function ReferenceCode(props: ReferenceCodeBlockProps) {
         },
         initialFetchResultState,
     )
-
-    console.log(props.children);
 
     const codeSnippetDetails = parseReference(props.children)
     fetchCode(codeSnippetDetails, fetchResultStateDispatcher)

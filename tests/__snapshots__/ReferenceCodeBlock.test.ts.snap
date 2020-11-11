@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should parse GitHub reference properly 1`] = `
+Object {
+  "fromLine": 0,
+  "title": "src/theme/ReferenceCodeBlock/index.ts",
+  "toLine": Infinity,
+  "url": "https://raw.githubusercontent.com/saucelabs/docusaurus-theme-github-codeblock/main/src/theme/ReferenceCodeBlock/index.ts",
+}
+`;
+
+exports[`should parse GitHub reference properly 2`] = `
+Object {
+  "fromLine": 104,
+  "title": "src/theme/ReferenceCodeBlock/index.tsx",
+  "toLine": 9,
+  "url": "https://raw.githubusercontent.com/saucelabs/docusaurus-theme-github-codeblock/main/src/theme/ReferenceCodeBlock/index.tsx",
+}
+`;
