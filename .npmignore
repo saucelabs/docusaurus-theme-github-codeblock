@@ -1,6 +1,10 @@
 example
+coverage
 node_modules
 src
+tests
 tsconfig.json
 .github
+.editorconfig
 *.tgz
+/*.js
