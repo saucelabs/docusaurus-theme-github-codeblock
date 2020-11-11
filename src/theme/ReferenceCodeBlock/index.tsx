@@ -22,7 +22,16 @@ const noteStyle: React.CSSProperties = {
 export function parseReference (ref: string): GitHubReference {
     const fullUrl = ref.slice(ref.indexOf('https'), -1)
     const [url, loc] = fullUrl.split('#')
-    const [org, repo, blob, branch, ...pathSeg] = new URL(url).pathname.split('/').slice(1)
+
+    /**
+     * webpack causes failures when it tries to render this page
+     */
+    if (!globalThis.URL) {
+        // @ts-ignore
+        globalThis.URL = URL
+    }
+
+    const [org, repo, blob, branch, ...pathSeg] = new globalThis.URL(url).pathname.split('/').slice(1)
     const [fromLine, toLine] = loc
         ? loc.split('-').map((lineNr) => parseInt(lineNr.slice(1), 10) - 1)
         : [0, Infinity]

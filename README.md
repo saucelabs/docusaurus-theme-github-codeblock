@@ -7,10 +7,10 @@ A Docusaurus v2 plugin that supports referencing code examples from public GitHu
 
 ## Install
 
-First, add the theme plugin to your dependencies:
+First, add the theme plugin to your dependencies as well as `@babel/plugin-transform-modules-commonjs`:
 
 ```sh
-npm install @saucelabs/theme-github-codeblock
+npm install @saucelabs/theme-github-codeblock @babel/plugin-transform-modules-commonjs
 ```
 
 ## Usage
@@ -23,6 +23,17 @@ Add the theme plugin to your list of themes in the `docusaurus.config.js`:
         '@saucelabs/theme-github-codeblock'
     ],
     // ...
+```
+
+in your `babel.config.js` please add `@babel/plugin-transform-modules-commonjs` to the plugins, e.g.:
+
+```js
+module.exports = {
+  presets: [require.resolve('@docusaurus/core/lib/babel/preset')],
+  plugins: [
+    '@babel/plugin-transform-modules-commonjs'
+  ]
+};
 ```
 
 In order to reference GitHub snippets in your markdown, create code blocks with a `reference` attached to the language meta string and put the link to your GitHub reference in the code block, e.g.:

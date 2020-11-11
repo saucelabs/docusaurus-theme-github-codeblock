@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc",
     "release": "release-it --github.release --ci --npm.skipChecks --no-git.requireCleanWorkingDir",
-    "test": "echo \"no unit tests yet\"",
+    "test": "jest",
     "watch": "tsc --watch"
   },
   "repository": {
