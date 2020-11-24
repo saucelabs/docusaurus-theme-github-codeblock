@@ -26,12 +26,13 @@ export function parseReference (ref: string): GitHubReference {
     /**
      * webpack causes failures when it tries to render this page
      */
-    if (!globalThis.URL) {
+    const global = globalThis || {}
+    if (!global.URL) {
         // @ts-ignore
-        globalThis.URL = URL
+        global.URL = URL
     }
 
-    const [org, repo, blob, branch, ...pathSeg] = new globalThis.URL(url).pathname.split('/').slice(1)
+    const [org, repo, blob, branch, ...pathSeg] = new global.URL(url).pathname.split('/').slice(1)
     const [fromLine, toLine] = loc
         ? loc.split('-').map((lineNr) => parseInt(lineNr.slice(1), 10) - 1)
         : [0, Infinity]
