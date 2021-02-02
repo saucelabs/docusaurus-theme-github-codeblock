@@ -79,31 +79,36 @@ async function fetchCode ({ url, fromLine, toLine }: GitHubReference, fetchResul
     })
 }
 
+function codeReducer (prevState: any, { type, value }: DispatchMessage) {
+    switch (type) {
+        case 'reset': {
+        return initialFetchResultState;
+        }
+        case 'loading': {
+        return {...prevState, loading: true};
+        }
+        case 'loaded': {
+        return {...prevState, code: value, loading: false};
+        }
+        case 'error': {
+        return {...prevState, error: value, loading: false};
+        }
+        default:
+        return prevState;
+    }
+}
+
 function ReferenceCode(props: ReferenceCodeBlockProps) {
     const [fetchResultState, fetchResultStateDispatcher] = useReducer(
-        (prevState: any, { type, value }: DispatchMessage) => {
-            switch (type) {
-                case 'reset': {
-                return initialFetchResultState;
-                }
-                case 'loading': {
-                return {...prevState, loading: true};
-                }
-                case 'loaded': {
-                return {...prevState, code: value, loading: false};
-                }
-                case 'error': {
-                return {...prevState, error: value, loading: false};
-                }
-                default:
-                return prevState;
-            }
-        },
+        codeReducer,
         initialFetchResultState,
     )
 
     const codeSnippetDetails = parseReference(props.children)
-    fetchCode(codeSnippetDetails, fetchResultStateDispatcher)
+    if (fetchResultState.loading !== false) {
+        fetchCode(codeSnippetDetails, fetchResultStateDispatcher)
+    }
+
     const customProps = {
         ...props,
         metastring: ` title="${codeSnippetDetails.title}"`,
