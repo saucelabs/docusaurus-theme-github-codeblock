@@ -109,11 +109,15 @@ function ReferenceCode(props: ReferenceCodeBlockProps) {
         fetchCode(codeSnippetDetails, fetchResultStateDispatcher)
     }
 
+    const titleMatch = props.metastring?.match(/title="(?<title>.*)"/);
+
     const customProps = {
         ...props,
-        metastring: ` title="${codeSnippetDetails.title}"`,
-        children: initialFetchResultState.code
-    }
+        metastring: titleMatch?.groups?.title
+            ? ` title="${titleMatch?.groups?.title}"`
+            : ` title="${codeSnippetDetails.title}"`,
+        children: initialFetchResultState.code,
+    };
 
     return (
         <div>
