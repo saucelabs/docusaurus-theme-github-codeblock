@@ -79,7 +79,7 @@ async function fetchCode ({ url, fromLine, toLine }: GitHubReference, fetchResul
     })
 }
 
-function codeReducer (prevState: any, { type, value }: DispatchMessage) {
+export function codeReducer (prevState: any, { type, value }: DispatchMessage) {
     switch (type) {
         case 'reset': {
         return initialFetchResultState;

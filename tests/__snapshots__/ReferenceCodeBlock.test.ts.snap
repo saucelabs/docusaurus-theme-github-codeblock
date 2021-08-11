@@ -1,5 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`codeReducer 1`] = `
+Object {
+  "code": "loading...",
+  "error": null,
+  "loading": null,
+}
+`;
+
+exports[`codeReducer 2`] = `
+Object {
+  "foo": "bar",
+  "loading": true,
+}
+`;
+
+exports[`codeReducer 3`] = `
+Object {
+  "code": "foobar",
+  "foo": "bar",
+  "loading": false,
+}
+`;
+
+exports[`codeReducer 4`] = `
+Object {
+  "error": "ups",
+  "foo": "bar",
+  "loading": false,
+}
+`;
+
 exports[`should parse GitHub reference properly 1`] = `
 Object {
   "fromLine": 0,
