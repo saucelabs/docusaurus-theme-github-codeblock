@@ -12,7 +12,8 @@ const initialFetchResultState = {
 
 const noteStyle: React.CSSProperties = {
     textAlign: 'right',
-    fontSize: '.8em'
+    fontSize: '.8em',
+    fontWeight: '700',
 }
 
 /**
