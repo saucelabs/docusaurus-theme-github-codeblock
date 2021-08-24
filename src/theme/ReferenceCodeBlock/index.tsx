@@ -13,7 +13,6 @@ const initialFetchResultState = {
 const noteStyle: React.CSSProperties = {
     textAlign: 'right',
     fontSize: '.8em',
-    font-weight: '700px',
 }
 
 /**
