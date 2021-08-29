@@ -126,7 +126,7 @@ function ReferenceCode(props: ReferenceCodeBlockProps) {
     return (
         <div>
             <CodeBlock {...customProps}>{fetchResultState.code}</CodeBlock>
-            <div style={noteStyle}>See full example on <a href={props.children} target="_blank">GitHub</a></div>
+            <div style={noteStyle}><a href={props.children} target="_blank">See full example on GitHub</a></div>
         </div>
     );
 }
