@@ -14,6 +14,10 @@ const noteStyle: React.CSSProperties = {
     textAlign: 'right',
     fontSize: '.9em',
     fontWeight: 600,
+    color: '#0E75DD',
+    textAlign: 'center',
+    paddingBottom: '13px',
+    textDecoration: 'underline',
 }
 
 /**
