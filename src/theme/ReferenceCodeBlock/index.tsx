@@ -1,4 +1,3 @@
-import { URL } from 'url'
 import React, { useReducer } from 'react'
 import CodeBlock from '@theme-init/CodeBlock'
 
