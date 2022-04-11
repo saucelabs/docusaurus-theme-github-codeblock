@@ -41,6 +41,15 @@ The plugin will download the code and display the desired lines:
 
 ![Plugin Example](https://github.com/saucelabs/docusaurus-theme-github-codeblock/raw/main/.github/assets/example.png 'Plugin Example')
 
+
+You can also set some fallback text if the plugin fails to find your codeblock:
+
+    ```js reference title="Code with fallback"
+    https://github.com/saucelabs/docusaurus-theme-github-codeblock/blob/main
+    This is some fallback text
+    It can be multiline
+    ```
+
 ---
 
 If you are interested contributing to this project, see [CONTRIBUTING.md](CONTRIBUTING.md).

@@ -7,6 +7,7 @@ const initialFetchResultState = {
     code: 'loading...',
     error: null,
     loading: null,
+    fallback: null
 }
 
 const noteStyle: React.CSSProperties = {
@@ -23,7 +24,8 @@ const noteStyle: React.CSSProperties = {
  * @param {string} ref url to github file
  */
 export function parseReference (ref: string): GitHubReference {
-    const fullUrl = ref.slice(ref.indexOf('https'), -1)
+    console.log(ref)
+    const fullUrl = ref.slice(ref.indexOf('https'), -1).trim().split('\n')[0]
     const [url, loc] = fullUrl.split('#')
 
     /**
@@ -54,12 +56,12 @@ async function fetchCode ({ url, fromLine, toLine }: GitHubReference, fetchResul
     try {
         res = await fetch(url)
     } catch (err) {
-        return fetchResultStateDispatcher({ type: 'error', value: err })
+        return fetchResultStateDispatcher({ type: 'error', value: err as Error })
     }
 
     if (res.status !== 200) {
         const error = await res.text()
-        return fetchResultStateDispatcher({ type: 'error', value: error })
+        return fetchResultStateDispatcher({ type: 'error', value: error as string })
     }
 
     const body = (await res.text()).split('\n').slice(fromLine, (toLine || fromLine) + 1)
@@ -88,13 +90,13 @@ export function codeReducer (prevState: any, { type, value }: DispatchMessage) {
         return initialFetchResultState;
         }
         case 'loading': {
-        return {...prevState, loading: true};
+        return {...prevState, loading: true, fallback: value};
         }
         case 'loaded': {
         return {...prevState, code: value, loading: false};
         }
         case 'error': {
-        return {...prevState, error: value, loading: false};
+        return {...prevState, error: value, loading: false, code: prevState.fallback};
         }
         default:
         return prevState;
@@ -108,7 +110,10 @@ function ReferenceCode(props: ReferenceCodeBlockProps) {
     )
 
     const codeSnippetDetails = parseReference(props.children)
+    const codeFallback = props.children.substring(props.children.indexOf("\n") + 1) ?? "Failed to load"
+
     if (fetchResultState.loading !== false) {
+        fetchResultStateDispatcher({ type: 'loading', value: codeFallback })
         fetchCode(codeSnippetDetails, fetchResultStateDispatcher)
     }
 
