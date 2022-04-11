@@ -4,45 +4,25 @@ import {
 } from "../src/theme/ReferenceCodeBlock/index";
 
 describe("ReferenceCodeBlock Tests", () => {
-    describe("parses url correctly", () => {
-        it("should get just the URL", () => {
-            const url =
-                "https://raw.githubusercontent.com/saucelabs/docusaurus-theme-github-codeblock/main/src/theme/ReferenceCodeBlock/index.tsx";
-            const ref = `\`\`\`${url}\`\`\``;
-            const fullUrl = ref
-                .slice(ref.indexOf("https"), -1)
-                .trim()
-                .split("\n")[0]
-                .trim()
-                .replace(/\`/g, "");
-            expect(fullUrl).toBe(url);
-        });
 
-        it("should get just the URL even if its got line numbers", () => {
-            const url =
-                "https://raw.githubusercontent.com/saucelabs/docusaurus-theme-github-codeblock/main/src/theme/ReferenceCodeBlock/index.tsxL1-L2";
-            const ref = `\`\`\`${url}\`\`\``;
-            const fullUrl = ref
-                .slice(ref.indexOf("https"), -1)
-                .trim()
-                .split("\n")[0]
-                .replace(/\`/g, "");
-            expect(fullUrl).toBe(url);
-        });
-
-        it("should get just the URL even if its got line numbers and it has new lines", () => {
-            const url =
-                "https://raw.githubusercontent.com/saucelabs/docusaurus-theme-github-codeblock/main/src/theme/ReferenceCodeBlock/index.tsx#L1-L2";
-            const ref = `\`\`\`${url}\nsome fallback text\`\`\``;
-            const fullUrl = ref
-                .slice(ref.indexOf("https"), -1)
-                .trim()
-                .split("\n")[0]
-                .replace(/\`/g, "");
-            expect(fullUrl).toBe(url);
-        });
-    });
-
+    const constructReferenceUrl = ({
+        url,
+        fromLine,
+        toLine,
+        fallbackText,
+    }: {
+        url: string;
+        fromLine?: number;
+        toLine?: number;
+        fallbackText?: string;
+    }) =>
+        `\`\`\`${
+            url +
+            (fromLine ? "#L" + fromLine : "") +
+            (toLine ? "-L" + toLine : "") +
+            (fallbackText ?? "")
+        }\`\`\``;
+        
     describe("parseReference", () => {
         let fromLine: number;
         let toLine: number;
@@ -52,10 +32,14 @@ describe("ReferenceCodeBlock Tests", () => {
         const url = `https://github.com/${repoName}/blob/main/${filePath}`;
         const expectedUrl = `https://raw.githubusercontent.com/${repoName}/main/${filePath}`;
 
-        it("should parse GitHub reference properly", () => {
-            const ref = `\`\`\`${url +
-                (fromLine ? "#L" + fromLine : "") +
-                (toLine ? "-L" + toLine : "")}\`\`\``;
+        it("should parse GitHub reference properly it its just the URL", () => {
+            fromLine = undefined;
+            toLine = undefined;
+            const ref = constructReferenceUrl({
+                url,
+                fromLine,
+                toLine,
+            });
             expect(parseReference(ref)).toEqual({
                 fromLine: 0,
                 title: filePath,
@@ -63,13 +47,45 @@ describe("ReferenceCodeBlock Tests", () => {
                 url: expectedUrl,
             });
         });
-        it("should parse GitHub reference properly", () => {
+        it("should parse GitHub reference properly if it has a from and to line number", () => {
             fromLine = 105;
             toLine = 108;
-            const ref = `\`\`\`${url +
-                (fromLine ? "#L" + fromLine : "") +
-                (toLine ? "-L" + toLine : "")}\`\`\``;
-            console.log(ref);
+            const ref = constructReferenceUrl({
+                url,
+                fromLine,
+                toLine,
+            });
+            expect(parseReference(ref)).toEqual({
+                fromLine: fromLine - 1,
+                title: filePath,
+                toLine: toLine - 1,
+                url: expectedUrl,
+            });
+        });
+        it("should parse GitHub reference properly if it has just a from number", () => {
+            fromLine = 105;
+            toLine = undefined;
+            const ref = constructReferenceUrl({
+                url,
+                fromLine,
+                toLine,
+            });            expect(parseReference(ref)).toEqual({
+                fromLine: fromLine - 1,
+                title: filePath,
+                toLine,
+                url: expectedUrl,
+            });
+        });
+        it("should parse GitHub reference properly if it has fallback content", () => {
+            fromLine = 105;
+            toLine = 108;
+            const fallbackText = `\nsome fallback text`;
+            const ref = constructReferenceUrl({
+                url,
+                fromLine,
+                toLine,
+                fallbackText,
+            });
             expect(parseReference(ref)).toEqual({
                 fromLine: fromLine - 1,
                 title: filePath,
@@ -78,6 +94,8 @@ describe("ReferenceCodeBlock Tests", () => {
             });
         });
     });
+
+
 
     describe("codeReducer", () => {
         const prevState = { foo: "bar" };
