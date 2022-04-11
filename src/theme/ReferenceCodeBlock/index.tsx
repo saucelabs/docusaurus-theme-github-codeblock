@@ -25,7 +25,7 @@ const noteStyle: React.CSSProperties = {
  */
 export function parseReference (ref: string): GitHubReference {
 
-    const fullUrl = ref.slice(ref.indexOf('https'), -1).trim().split('\n')[0]
+    const fullUrl = ref.slice(ref.indexOf('https'), -1).trim().split('\n')[0].replace(/\`/g, "");
     const [url, loc] = fullUrl.split('#')
 
     /**
