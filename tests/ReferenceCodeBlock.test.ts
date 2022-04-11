@@ -12,8 +12,8 @@ describe("ReferenceCodeBlock Tests", () => {
         fallbackText,
     }: {
         url: string;
-        fromLine?: number;
-        toLine?: number;
+        fromLine?: number | undefined;
+        toLine?: number | undefined;
         fallbackText?: string;
     }) =>
         `\`\`\`${
@@ -22,10 +22,10 @@ describe("ReferenceCodeBlock Tests", () => {
             (toLine ? "-L" + toLine : "") +
             (fallbackText ?? "")
         }\`\`\``;
-        
+
     describe("parseReference", () => {
-        let fromLine: number;
-        let toLine: number;
+        let fromLine: number | undefined;
+        let toLine: number | undefined;
 
         const filePath = "src/theme/ReferenceCodeBlock/index.tsx";
         const repoName = "saucelabs/docusaurus-theme-github-codeblock";
@@ -124,9 +124,9 @@ describe("ReferenceCodeBlock Tests", () => {
 
         it("should handle fallback", () => {
             expect(
-                codeReducer(prevState, { type: "fallback", value: "" })
+                codeReducer(prevState, { type: "fallback", value: "fallback text" })
             ).toEqual({
-                code: "",
+                code: "fallback text",
                 fallback: true,
                 foo: "bar",
                 loading: false,
