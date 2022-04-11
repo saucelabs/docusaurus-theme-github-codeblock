@@ -93,13 +93,13 @@ export function codeReducer (prevState: any, { type, value }: DispatchMessage) {
         return {...prevState, loading: true};
         }
         case 'fallback': {
-        return {...prevState, fallback: value, loading: false};
+        return {...prevState, code: value, loading: false, fallback: true};
         }
         case 'loaded': {
         return {...prevState, code: value, loading: false};
         }
         case 'error': {
-        return {...prevState, error: value, loading: false, code: prevState.fallback};
+        return {...prevState, error: value, loading: false};
         }
         default:
         return prevState;
@@ -116,9 +116,19 @@ function ReferenceCode(props: ReferenceCodeBlockProps) {
 
     if (fetchResultState.loading !== false) {
         fetchCode(codeSnippetDetails, fetchResultStateDispatcher)
-        const codeFallback = props.children.substring(props.children.indexOf("\n") + 1) === "" ? "URL attempted to load from was: \n" + props.children : props.children.substring(props.children.indexOf("\n") + 1);
-        fetchResultStateDispatcher({ type: 'fallback', value: codeFallback })
     }
+
+    if (!fetchResultState.fallback) {
+        const trimmedFirstLine = props.children.substring(
+            props.children.indexOf("\n") + 1
+        );
+        const codeFallback =
+            trimmedFirstLine === ""
+                ? "URL attempted to load from was: \n" + props.children
+                : trimmedFirstLine;
+        fetchResultStateDispatcher({ type: "fallback", value: codeFallback });
+    }
+
 
     const titleMatch = props.metastring?.match(/title="(?<title>.*)"/);
 
