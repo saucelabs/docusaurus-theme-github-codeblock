@@ -93,13 +93,13 @@ export function codeReducer (prevState: any, { type, value }: DispatchMessage) {
         return {...prevState, loading: true};
         }
         case 'fallback': {
-        return {...prevState, code: value, loading: false, fallback: true};
+        return { ...prevState, code: value, loading: false, fallback: true };
         }
         case 'loaded': {
         return {...prevState, code: value, loading: false};
         }
         case 'error': {
-        return {...prevState, error: value, loading: false};
+        return { ...prevState, error: value, loading: false };
         }
         default:
         return prevState;

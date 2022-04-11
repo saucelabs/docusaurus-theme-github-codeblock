@@ -1,22 +1,88 @@
-import { timeStamp } from 'console'
-import { parseReference, codeReducer } from '../src/theme/ReferenceCodeBlock/index'
+import {
+    parseReference,
+    codeReducer,
+} from "../src/theme/ReferenceCodeBlock/index";
 
-test('should parse GitHub reference properly', () => {
-    expect(parseReference('https://github.com/saucelabs/docusaurus-theme-github-codeblock/blob/main/src/theme/ReferenceCodeBlock/index.tsx'))
-        .toMatchSnapshot()
-    expect(parseReference('https://github.com/saucelabs/docusaurus-theme-github-codeblock/blob/main/src/theme/ReferenceCodeBlock/index.tsx#L105-L108'))
-        .toMatchSnapshot()
-})
+describe("ReferenceCodeBlock Tests", () => {
+    describe("parseReference", () => {
+        const filePath = "src/theme/ReferenceCodeBlock/index.tsx";
+        const repoName = "saucelabs/docusaurus-theme-github-codeblock"
+        const url = `https://github.com/${repoName}/blob/main/${filePath}`;
+        const expectedUrl = `https://raw.githubusercontent.com/${repoName}/main/${filePath}`
+        let fromLine:number
+        let toLine:number
+        it("should parse GitHub reference properly", () => {
+            const reference =
+            url +
+            (fromLine ? "#L" + fromLine : "") +
+            (toLine ? "-L" + toLine : "");
+            expect(
+                parseReference(
+                    reference
+                )
+            ).toEqual({
+                fromLine: 0,
+                title: filePath,
+                toLine: Infinity,
+                url: expectedUrl,
+            });
+        });
+        it("should parse GitHub reference properly", () => {
 
-test('codeReducer', () => {
-    const prevState = { foo: 'bar' }
-    expect(codeReducer(prevState, { type: 'reset', value: '' })).toMatchSnapshot()
-    expect(codeReducer(prevState, { type: 'loading', value: '' })).toMatchSnapshot()
-    expect(codeReducer(prevState, { type: 'loaded', value: 'foobar' })).toMatchSnapshot()
-    expect(codeReducer(prevState, { type: 'error', value: 'ups' })).toMatchSnapshot()
-    // @ts-expect-error
-    expect(codeReducer(prevState, { type: 'unknown', value: '' })).toEqual(prevState)
-})
+             fromLine = 105;
+             toLine = 108;
+            const reference =
+                url +
+                (fromLine ? "#L" + fromLine : "") +
+                (toLine ? "-L" + toLine : "");
+            const expectedToLine = 9
+            console.log(reference)
+            expect(parseReference(reference)).toEqual({
+                fromLine: fromLine -1,
+                title: filePath,
+                toLine:expectedToLine,
+                url:expectedUrl
+            });
+        });
+    });
+
+    describe("codeReducer", () => {
+        const prevState = { foo: "bar" };
+
+        it("should handle loading", () => {
+            expect(
+                codeReducer(prevState, { type: "loading", value: "" })
+            ).toEqual({ foo: "bar", loading: true });
+        });
+        it("should handle loaded", () => {
+            expect(
+                codeReducer(prevState, { type: "loaded", value: "foobar" })
+            ).toEqual({ code: "foobar", foo: "bar", loading: false });
+        });
+        it("should handle error", () => {
+            expect(
+                codeReducer(prevState, { type: "error", value: "ups" })
+            ).toEqual({ error: "ups", foo: "bar", loading: false });
+        });
+        it("should handle unknown", () => {
+            expect(
+                // @ts-ignore
+                codeReducer(prevState, { type: "unknown", value: "" })
+            ).toEqual(prevState);
+        });
+
+        it("should handle fallback", () => {
+            expect(
+                codeReducer(prevState, { type: "fallback", value: "" })
+            ).toEqual({
+                   "code": "",
+                   "fallback": true,
+                   "foo": "bar",
+                   "loading": false,
+                  });
+        });
+    });
+});
 
 // export function codeReducer (prevState: any, { type, value }: DispatchMessage) {
 //     switch (type) {

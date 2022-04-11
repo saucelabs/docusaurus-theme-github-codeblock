@@ -22,7 +22,7 @@ It can be multi-line
 You will note the footer is removed, as the URL is invalid
 ```
 
-```js reference title="Fallback"
+```js reference title="Fallback with no user provided fallback. The pointer might be helpful?"
 https://github.com/saucelabs/docusaurus-theme-github-codeblock/blob/main/src/th
 ```
 
