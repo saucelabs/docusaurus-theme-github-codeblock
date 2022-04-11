@@ -45,9 +45,7 @@ The plugin will download the code and display the desired lines:
 You can also set some fallback text if the plugin fails to find your codeblock:
 
     ```js reference title="Code with fallback"
-    https://github.com/saucelabs/docusaurus-theme-github-codeblock/blob/main
-    This is some fallback text
-    It can be multiline
+    https://github.com/saucelabs/docusaurus-theme-github-codeblock/blob/main/src/theme/ReferenceCodeBlock/index.tsx#L105-L108
     ```
 
 ---

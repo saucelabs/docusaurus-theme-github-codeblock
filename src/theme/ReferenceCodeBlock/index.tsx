@@ -24,7 +24,7 @@ const noteStyle: React.CSSProperties = {
  * @param {string} ref url to github file
  */
 export function parseReference (ref: string): GitHubReference {
-    console.log(ref)
+
     const fullUrl = ref.slice(ref.indexOf('https'), -1).trim().split('\n')[0]
     const [url, loc] = fullUrl.split('#')
 
@@ -90,7 +90,10 @@ export function codeReducer (prevState: any, { type, value }: DispatchMessage) {
         return initialFetchResultState;
         }
         case 'loading': {
-        return {...prevState, loading: true, fallback: value};
+        return {...prevState, loading: true};
+        }
+        case 'fallback': {
+        return {...prevState, fallback: value, loading: false};
         }
         case 'loaded': {
         return {...prevState, code: value, loading: false};
@@ -110,11 +113,11 @@ function ReferenceCode(props: ReferenceCodeBlockProps) {
     )
 
     const codeSnippetDetails = parseReference(props.children)
-    const codeFallback = props.children.substring(props.children.indexOf("\n") + 1) ?? "Failed to load"
 
     if (fetchResultState.loading !== false) {
-        fetchResultStateDispatcher({ type: 'loading', value: codeFallback })
         fetchCode(codeSnippetDetails, fetchResultStateDispatcher)
+        const codeFallback = props.children.substring(props.children.indexOf("\n") + 1) === "" ? "URL attempted to load from was: \n" + props.children : props.children.substring(props.children.indexOf("\n") + 1);
+        fetchResultStateDispatcher({ type: 'fallback', value: codeFallback })
     }
 
     const titleMatch = props.metastring?.match(/title="(?<title>.*)"/);
@@ -130,7 +133,13 @@ function ReferenceCode(props: ReferenceCodeBlockProps) {
     return (
         <div>
             <CodeBlock {...customProps}>{fetchResultState.code}</CodeBlock>
-            <div style={noteStyle}><a href={props.children} target="_blank">See full example on GitHub</a></div>
+            {!fetchResultState.error ? (
+                <div style={noteStyle}>
+                    <a href={props.children} target="_blank">
+                        See full example on GitHub
+                    </a>
+                </div>
+            ) : undefined}
         </div>
     );
 }

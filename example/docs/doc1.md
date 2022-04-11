@@ -15,6 +15,17 @@ https://github.com/saucelabs/docusaurus-theme-github-codeblock/blob/main/src/the
 https://github.com/saucelabs/docusaurus-theme-github-codeblock/blob/main/src/theme/ReferenceCodeBlock/index.tsx#L104-L107
 ```
 
+```js reference title="Fallback"
+https://github.com/saucelabs/docusaurus-theme-github-codeblock/blob/main/src/th
+This is some fallback code
+It can be multi-line
+You will note the footer is removed, as the URL is invalid
+```
+
+```js reference title="Fallback"
+https://github.com/saucelabs/docusaurus-theme-github-codeblock/blob/main/src/th
+```
+
 You can write content using [GitHub-flavored Markdown syntax](https://github.github.com/gfm/).
 
 ## Markdown Syntax
