@@ -4,6 +4,8 @@ import CodeBlock from '@theme-init/CodeBlock'
 
 import type { ReferenceCodeBlockProps, GitHubReference, DispatchMessage } from '../types'
 
+const DEFAULT_LINK_TEXT = 'See full example on GitHub'
+
 const initialFetchResultState = {
     code: 'loading...',
     error: null,
@@ -115,6 +117,13 @@ function ReferenceCode(props: ReferenceCodeBlockProps) {
 
     const titleMatch = props.metastring?.match(/title="(?<title>.*)"/);
 
+    const refLinkMatch = props.metastring?.match(/referenceLinkText="(?<referenceLinkText>.*)"/);
+    const refLinkText = refLinkMatch?.groups?.referenceLinkText ?? DEFAULT_LINK_TEXT;
+
+    const customStylingMatch = props.metastring?.match(/customStyling/);
+    const useCustomStyling = customStylingMatch?.length === 1;
+    const noteStyling = customStylingMatch?.length === 1 ? {} : noteStyle;
+
     const customProps = {
         ...props,
         metastring: titleMatch?.groups?.title
@@ -126,7 +135,9 @@ function ReferenceCode(props: ReferenceCodeBlockProps) {
     return (
         <div>
             <CodeBlock {...customProps}>{fetchResultState.code}</CodeBlock>
-            <div style={noteStyle}><a href={props.children} target="_blank">See full example on GitHub</a></div>
+            <div style={noteStyling} className={useCustomStyling ? 'github-codeblock-reference-link' : ''}>
+                <a href={props.children} target="_blank">{refLinkText}</a>
+            </div>
         </div>
     );
 }
