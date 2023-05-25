@@ -1,6 +1,6 @@
 {
   "name": "@saucelabs/theme-github-codeblock",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A Docusaurus v2 plugin that supports referencing code examples from public GitHub repositories.",
   "main": "build/index.js",
   "directories": {
