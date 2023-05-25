@@ -2,7 +2,7 @@ import { URL } from 'url'
 import React, { useReducer } from 'react'
 import CodeBlock from '@theme-init/CodeBlock'
 
-import type { ReferenceCodeBlockProps, GitHubReference, DispatchMessage } from '../types'
+import type { ReferenceCodeBlockProps, GitHubReference, DispatchMessage, CustomizedLinkOptions } from '../types'
 
 const DEFAULT_LINK_TEXT = 'See full example on GitHub'
 
@@ -51,13 +51,34 @@ export function parseReference (ref: string): GitHubReference {
     }
 }
 
+export function parseCustomization (ref: string): CustomizedLinkOptions {    
+
+    const url = new URL(ref);
+
+    const urlTitle = url.searchParams.get('title');
+    const urlLinkText = url.searchParams.has('referenceLinkText') 
+        ? url.searchParams.get('referenceLinkText')
+        : DEFAULT_LINK_TEXT;
+
+    
+    const urlUseCustomStyling = url.searchParams.has('customStyling')
+    const urlNoteStyling = urlUseCustomStyling ? {} : noteStyle;
+    
+    return {
+        title: urlTitle,
+        linkText: urlLinkText,
+        noteStyling: urlNoteStyling,
+        useCustomStyling: urlUseCustomStyling
+    }
+}
+
 async function fetchCode ({ url, fromLine, toLine }: GitHubReference, fetchResultStateDispatcher: React.Dispatch<DispatchMessage>) {
     let res: Response
 
     try {
         res = await fetch(url)
     } catch (err) {
-        return fetchResultStateDispatcher({ type: 'error', value: err })
+        return fetchResultStateDispatcher({ type: 'error', value: err as Error })
     }
 
     if (res.status !== 200) {
@@ -115,19 +136,12 @@ function ReferenceCode(props: ReferenceCodeBlockProps) {
         fetchCode(codeSnippetDetails, fetchResultStateDispatcher)
     }
 
-    const titleMatch = props.metastring?.match(/title="(?<title>.*)"/);
-
-    const refLinkMatch = props.metastring?.match(/referenceLinkText="(?<referenceLinkText>.*)"/);
-    const refLinkText = refLinkMatch?.groups?.referenceLinkText ?? DEFAULT_LINK_TEXT;
-
-    const customStylingMatch = props.metastring?.match(/customStyling/);
-    const useCustomStyling = customStylingMatch?.length === 1;
-    const noteStyling = customStylingMatch?.length === 1 ? {} : noteStyle;
+    const parsedCustomization = parseCustomization(props.children)
 
     const customProps = {
         ...props,
-        metastring: titleMatch?.groups?.title
-            ? ` title="${titleMatch?.groups?.title}"`
+        metastring: parsedCustomization.title
+            ? ` title="${parsedCustomization.title}"`
             : ` title="${codeSnippetDetails.title}"`,
         children: initialFetchResultState.code,
     };
@@ -135,8 +149,8 @@ function ReferenceCode(props: ReferenceCodeBlockProps) {
     return (
         <div>
             <CodeBlock {...customProps}>{fetchResultState.code}</CodeBlock>
-            <div style={noteStyling} className={useCustomStyling ? 'github-codeblock-reference-link' : ''}>
-                <a href={props.children} target="_blank">{refLinkText}</a>
+            <div style={parsedCustomization.noteStyling} className={parsedCustomization.useCustomStyling ? 'github-codeblock-reference-link' : ''}>
+                <a href={props.children} target="_blank">{parsedCustomization.linkText}</a>
             </div>
         </div>
     );
