@@ -17,3 +17,10 @@ export interface DispatchMessage {
     type: DispatchTypes
     value: string | Error
 }
+
+export interface CustomizedLinkOptions {
+    title: string | null
+    linkText: string | null
+    noteStyling: React.CSSProperties
+    useCustomStyling: boolean
+}

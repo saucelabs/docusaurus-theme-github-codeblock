@@ -48,3 +48,44 @@ Object {
   "url": "https://raw.githubusercontent.com/saucelabs/docusaurus-theme-github-codeblock/main/src/theme/ReferenceCodeBlock/index.tsx",
 }
 `;
+
+exports[`should use custom reference link text 1`] = `
+Object {
+  "linkText": "\\"Sample text\\"",
+  "noteStyling": Object {
+    "color": "#0E75DD",
+    "fontSize": ".9em",
+    "fontWeight": 600,
+    "paddingBottom": "13px",
+    "textAlign": "center",
+    "textDecoration": "underline",
+  },
+  "title": null,
+  "useCustomStyling": false,
+}
+`;
+
+exports[`should use custom reference link text 2`] = `
+Object {
+  "linkText": "\\"Sample text\\"",
+  "noteStyling": Object {
+    "color": "#0E75DD",
+    "fontSize": ".9em",
+    "fontWeight": 600,
+    "paddingBottom": "13px",
+    "textAlign": "center",
+    "textDecoration": "underline",
+  },
+  "title": "\\"Sample title\\"",
+  "useCustomStyling": false,
+}
+`;
+
+exports[`should use custom reference link text 3`] = `
+Object {
+  "linkText": "\\"Sample text\\"",
+  "noteStyling": Object {},
+  "title": "\\"Sample title\\"",
+  "useCustomStyling": true,
+}
+`;
