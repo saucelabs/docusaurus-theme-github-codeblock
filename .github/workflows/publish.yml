@@ -9,7 +9,7 @@ on:
         default: 'patch'
 
 jobs:
-  test:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Clone Repository
@@ -34,7 +34,7 @@ jobs:
           npm set //registry.npmjs.org/:_authToken $NPM_TOKEN
           npm whoami
         env:
-          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Release
         run: npm run release -- ${{github.event.inputs.releaseType}}
         env:
