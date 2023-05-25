@@ -51,7 +51,7 @@ Object {
 
 exports[`should use custom reference link text 1`] = `
 Object {
-  "linkText": "\\"Sample text\\"",
+  "linkText": "Sample text",
   "noteStyling": Object {
     "color": "#0E75DD",
     "fontSize": ".9em",
@@ -60,14 +60,14 @@ Object {
     "textAlign": "center",
     "textDecoration": "underline",
   },
-  "title": null,
+  "title": undefined,
   "useCustomStyling": false,
 }
 `;
 
 exports[`should use custom reference link text 2`] = `
 Object {
-  "linkText": "\\"Sample text\\"",
+  "linkText": "Sample text",
   "noteStyling": Object {
     "color": "#0E75DD",
     "fontSize": ".9em",
@@ -76,16 +76,16 @@ Object {
     "textAlign": "center",
     "textDecoration": "underline",
   },
-  "title": "\\"Sample title\\"",
+  "title": "Sample title",
   "useCustomStyling": false,
 }
 `;
 
 exports[`should use custom reference link text 3`] = `
 Object {
-  "linkText": "\\"Sample text\\"",
+  "linkText": "Sample text",
   "noteStyling": Object {},
-  "title": "\\"Sample title\\"",
+  "title": "Sample title",
   "useCustomStyling": true,
 }
 `;

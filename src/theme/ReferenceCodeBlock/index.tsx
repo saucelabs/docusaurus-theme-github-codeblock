@@ -51,24 +51,22 @@ export function parseReference (ref: string): GitHubReference {
     }
 }
 
-export function parseCustomization (ref: string): CustomizedLinkOptions {    
+export function parseCustomization (metastring: string | undefined): CustomizedLinkOptions {    
 
-    const url = new URL(ref);
+    const refTitle = metastring?.match(/title="(?<title>.*?)"/)?.groups?.title;
 
-    const urlTitle = url.searchParams.get('title');
-    const urlLinkText = url.searchParams.has('referenceLinkText') 
-        ? url.searchParams.get('referenceLinkText')
-        : DEFAULT_LINK_TEXT;
+    const refLinkMatch = metastring?.match(/referenceLinkText="(?<referenceLinkText>.*?)"/);
+    const refLinkText = refLinkMatch?.groups?.referenceLinkText ?? DEFAULT_LINK_TEXT;
 
-    
-    const urlUseCustomStyling = url.searchParams.has('customStyling')
-    const urlNoteStyling = urlUseCustomStyling ? {} : noteStyle;
-    
+    const customStylingMatch = metastring?.match(/customStyling/);
+    const refUseCustomStyling = customStylingMatch?.length === 1;
+    const refNoteStyling = customStylingMatch?.length === 1 ? {} : noteStyle;
+   
     return {
-        title: urlTitle,
-        linkText: urlLinkText,
-        noteStyling: urlNoteStyling,
-        useCustomStyling: urlUseCustomStyling
+        title: refTitle,
+        linkText: refLinkText,
+        noteStyling: refNoteStyling,
+        useCustomStyling: refUseCustomStyling
     }
 }
 
@@ -136,7 +134,7 @@ function ReferenceCode(props: ReferenceCodeBlockProps) {
         fetchCode(codeSnippetDetails, fetchResultStateDispatcher)
     }
 
-    const parsedCustomization = parseCustomization(props.children)
+    const parsedCustomization = parseCustomization(props.metastring)
 
     const customProps = {
         ...props,

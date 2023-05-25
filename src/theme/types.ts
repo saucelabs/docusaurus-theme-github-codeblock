@@ -19,8 +19,8 @@ export interface DispatchMessage {
 }
 
 export interface CustomizedLinkOptions {
-    title: string | null
-    linkText: string | null
+    title: string | undefined
+    linkText: string
     noteStyling: React.CSSProperties
     useCustomStyling: boolean
 }

@@ -8,11 +8,11 @@ test('should parse GitHub reference properly', () => {
 })
 
 test('should use custom reference link text', () => {
-    expect(parseCustomization('https://github.com/saucelabs/docusaurus-theme-github-codeblock/blob/main/src/theme/ReferenceCodeBlock/index.tsx?referenceLinkText="Sample text"'))
+    expect(parseCustomization('referenceLinkText="Sample text"'))
         .toMatchSnapshot()
-    expect(parseCustomization('https://github.com/saucelabs/docusaurus-theme-github-codeblock/blob/main/src/theme/ReferenceCodeBlock/index.tsx?referenceLinkText="Sample text"&title="Sample title"'))
+    expect(parseCustomization('referenceLinkText="Sample text" title="Sample title"'))
         .toMatchSnapshot()
-    expect(parseCustomization('https://github.com/saucelabs/docusaurus-theme-github-codeblock/blob/main/src/theme/ReferenceCodeBlock/index.tsx?referenceLinkText="Sample text"&title="Sample title"&customStyling'))
+    expect(parseCustomization('referenceLinkText="Sample text" title="Sample title" customStyling'))
         .toMatchSnapshot()
 })
 
