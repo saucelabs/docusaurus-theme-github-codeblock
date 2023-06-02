@@ -10,7 +10,11 @@ A Docusaurus v2 plugin that supports referencing code examples from public GitHu
 First, add the theme plugin to your dependencies:
 
 ```sh
-npm install @saucelabs/theme-github-codeblock
+# NPM
+npm install --save @saucelabs/theme-github-codeblock
+
+# Yarn
+yarn add @saucelabs/theme-github-codeblock
 ```
 
 ## Usage
