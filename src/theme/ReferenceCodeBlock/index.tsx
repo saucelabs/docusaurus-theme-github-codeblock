@@ -1,4 +1,3 @@
-import { URL } from 'url'
 import React, { useReducer } from 'react'
 import CodeBlock from '@theme-init/CodeBlock'
 
@@ -51,7 +50,7 @@ export function parseReference (ref: string): GitHubReference {
     }
 }
 
-export function parseCustomization (metastring: string | undefined): CustomizedLinkOptions {    
+export function parseCustomization (metastring: string | undefined): CustomizedLinkOptions {
 
     const refTitle = metastring?.match(/title="(?<title>.*?)"/)?.groups?.title;
 
@@ -61,7 +60,7 @@ export function parseCustomization (metastring: string | undefined): CustomizedL
     const customStylingMatch = metastring?.match(/customStyling/);
     const refUseCustomStyling = customStylingMatch?.length === 1;
     const refNoteStyling = customStylingMatch?.length === 1 ? {} : noteStyle;
-   
+
     return {
         title: refTitle,
         linkText: refLinkText,
