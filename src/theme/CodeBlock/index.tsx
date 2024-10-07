@@ -13,7 +13,7 @@ import type { ReferenceCodeBlockProps } from '../types'
 
 const componentWrapper = (Component: typeof CodeBlock) => {
   const WrappedComponent = (props: ReferenceCodeBlockProps) => {
-    if (props.reference) {
+    if (props.reference || props.metastring?.split(' ').includes('reference')) {
       return (
         <ReferenceCodeBlock {...props} />
       );
